@@ -128,3 +128,21 @@ spec:
       containers:
         - name: animals
           image: "supergiantkir/animals:moose"
+
+          ---
+
+apiVersion: v1
+
+
+kind: Service      # Create new service 
+metadata:
+  name: my-service # Name of the service
+spec:
+  selector:
+    app: canary-animals    # Run on any pod(s) with label - app: ui
+  ports:          # Map incoming port to target port
+  - name: http-web    # Setting multiple ports listterns 
+    protocol: TCP
+    port: 80
+    targetPort: 80
+  type: LoadBalancer
