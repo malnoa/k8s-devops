@@ -121,7 +121,7 @@ spec:
   - port: 3306
     protocol: TCP
   selector:
-    run: mysql
+    app: mysql
 
 ---
 
