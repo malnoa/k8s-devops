@@ -13,7 +13,7 @@ spec:
   - from:
     - podSelector:
         matchLabels:
-          role: no-role
+          app: wordpress
     ports:
     - protocol: TCP
       port: 3306
