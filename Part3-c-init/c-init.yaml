@@ -26,7 +26,8 @@ spec:
   initContainers:
   - name: init-step1 # INIT 1 
     image: alpine/git:latest
-    command: ['git', 'clone', '$(GIT_PATH)', '/cdn']
+    command: ['git', 'clone', '$(GIT_PATH)']
+    args: ['/cdn']
     env:
       - name: GIT_PATH
         valueFrom:
