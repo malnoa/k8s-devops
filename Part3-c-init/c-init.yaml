@@ -33,7 +33,7 @@ spec:
           - name: nginx-port
             containerPort: 80
       initContainers:
-      - name: init-step1 # INIT 1 
+      - name: init-step1 
         image: alpine/git:latest
         command: ['git', 'clone', '$(GIT_PATH)']
         args: ['/cdn']
