@@ -59,7 +59,7 @@ metadata:
 spec:
   ports:
   - port: 80
-    targetPort: http-port
+    targetPort: 80
     protocol: TCP
   selector:
     app: myapp
