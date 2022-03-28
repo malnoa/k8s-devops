@@ -10,36 +10,45 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-dep
+  name: my-pod
   labels:
     app: myapp
-  spec:
-    containers:
-    - name: nginx
-      image: nginx:latest
-      volumeMounts:
-      - mountPath: /usr/share/nginx/html
-        name: cdn
-      ports:
-        - name: nginx-port
-          containerPort: 80
-    initContainers:
-    - name: init-step1 # INIT 1 
-      image: alpine/git:latest
-      command: ['git', 'clone', '$(GIT_PATH)']
-      args: ['/cdn']
-      env:
-        - name: GIT_PATH
-          valueFrom:
-            configMapKeyRef:
-              name: nginx
-              key: source
-      volumeMounts:
-      - mountPath: /cdn
-        name: cdn
-    volumes:
-    - name: cdn
-      emptyDir: {}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: cdn
+        ports:
+          - name: nginx-port
+            containerPort: 80
+      initContainers:
+      - name: init-step1 # INIT 1 
+        image: alpine/git:latest
+        command: ['git', 'clone', '$(GIT_PATH)']
+        args: ['/cdn']
+        env:
+          - name: GIT_PATH
+            valueFrom:
+              configMapKeyRef:
+                name: nginx
+                key: source
+        volumeMounts:
+        - mountPath: /cdn
+          name: cdn
+      volumes:
+      - name: cdn
+        emptyDir: {}
 
 ---
 
